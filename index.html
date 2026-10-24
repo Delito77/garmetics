@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full bg-slate-950 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Garmetics.com - Mode & Cosmétiques | Neuf & Seconde Main</title>
+  
+  <!-- Meta SEO de base générés pour Google -->
+  <meta name="description" content="Découvrez Garmetics.com, la marketplace de mode et cosmétiques. Achetez neuf ou d'occasion à prix bas avec vidéos d'essayage et livraison rapide sans création de compte.">
+  <meta name="keywords" content="mode, cosmétiques, seconde main, vêtements occasion, maquillage pas cher, garmetics, vêtement neuf, friperie en ligne">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="h-full flex flex-col font-sans bg-slate-950 text-slate-100 antialiased selection:bg-pink-500 selection:text-white">
+
+  <!-- BARRE DE NAVIGATION PRINCIPALE -->
+  <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- LOGO -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('feed')">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-pink-500 via-purple-500 to-indigo-500 flex items-center justify-center font-black text-xl shadow-lg shadow-pink-500/20">
+          G
+        </div>
+        <div>
+          <span class="text-xl font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">Garmetics</span>
+          <span class="text-[10px] text-emerald-400 block -mt-1 font-semibold tracking-wider">SEO BOOSTED</span>
+        </div>
+      </div>
+
+      <!-- RECHERCHE OPTIMISÉE SEO -->
+      <div class="hidden md:flex flex-1 max-w-md relative">
+        <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Rechercher une robe, sérum, veste cuir, taille..." 
+               class="w-full bg-slate-800/80 border border-slate-700/80 rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition text-slate-200 placeholder-slate-400">
+        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-2.5"></i>
+      </div>
+
+      <!-- SÉLECTEUR DE VUE & ACTIONS -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Vues -->
+        <div class="bg-slate-800/80 p-1 rounded-lg border border-slate-700/80 flex items-center gap-1">
+          <button id="btnViewFeed" onclick="switchTab('feed')" class="px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5 transition bg-pink-600 text-white shadow-sm">
+            <i data-lucide="play-square" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">Flux Vidéo</span>
+          </button>
+          <button id="btnViewGrid" onclick="switchTab('grid')" class="px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5 transition text-slate-400 hover:text-slate-200">
+            <i data-lucide="grid" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">Boutique</span>
+          </button>
+        </div>
+
+        <!-- Bouton Vendre / Créer Boutique -->
+        <button onclick="openModal('sellerModal')" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-semibold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 transition shadow-lg shadow-emerald-500/10">
+          <i data-lucide="plus-circle" class="w-4 h-4"></i>
+          <span>Vendre (Gratuit 1Go)</span>
+        </button>
+
+        <!-- Bouton Panier -->
+        <button onclick="toggleCartDrawer()" class="relative p-2 text-slate-300 hover:text-white bg-slate-800 rounded-lg border border-slate-700">
+          <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+          <span id="cartCountBadge" class="absolute -top-1.5 -right-1.5 bg-pink-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-slate-950 hidden">0</span>
+        </button>
+
+        <!-- Bouton Tableau de bord Admin / Fondateur -->
+        <button onclick="openModal('adminModal')" class="p-2 text-purple-400 hover:text-purple-300 bg-purple-950/40 border border-purple-800/50 rounded-lg" title="Tableau de Bord Fondateur">
+          <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- BANNIÈRE D'INCITATION VENDEURS (SEO BOOST) -->
+  <section class="bg-gradient-to-r from-purple-900/60 via-pink-900/40 to-slate-900 border-b border-pink-500/20 px-4 py-2 text-center text-xs text-pink-200 flex items-center justify-center gap-2">
+    <span class="bg-pink-500 text-slate-950 font-bold px-1.5 py-0.5 rounded text-[10px] uppercase tracking-wide">Boost SEO Vendeur</span>
+    <span>Postez vos vêtements & cosmétiques : notre moteur génère automatique vos mots-clés Google pour vous amener des clients !</span>
+    <button onclick="openModal('sellerModal')" class="underline font-bold text-white hover:text-pink-300 ml-1">Ouvrir ma boutique &rarr;</button>
+  </section>
+
+  <!-- FILTRES DE NAVEGATION PAR CONDITION (NEUF / OCCASION) -->
+  <div class="bg-slate-900 border-b border-slate-800/80 py-2.5 px-4 overflow-x-auto">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4 text-xs">
+      <div class="flex items-center gap-2 shrink-0">
+        <span class="text-slate-400 font-medium mr-1">Filtrer par état :</span>
+        <button onclick="filterCondition('all')" id="filterAll" class="px-3 py-1 rounded-full bg-slate-800 text-pink-400 font-semibold border border-pink-500/30">Tout le catalogue</button>
+        <button onclick="filterCondition('second_hand')" id="filterSecondHand" class="px-3 py-1 rounded-full bg-slate-800/60 text-slate-300 hover:bg-slate-800 border border-slate-700 flex items-center gap-1">
+          <span>🏷️ Seconde Main (Occasion)</span>
+          <span class="bg-emerald-950 text-emerald-400 text-[10px] px-1 rounded border border-emerald-800">-50% à -80%</span>
+        </button>
+        <button onclick="filterCondition('new')" id="filterNew" class="px-3 py-1 rounded-full bg-slate-800/60 text-slate-300 hover:bg-slate-800 border border-slate-700">✨ Neuf & Créateurs</button>
+      </div>
+
+      <div class="hidden sm:flex items-center gap-3 text-slate-400 text-[11px] shrink-0">
+        <span class="flex items-center gap-1"><i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Vidéos de preuve d'état</span>
+        <span class="flex items-center gap-1"><i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400"></i> Achat direct sans inscription</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZONE DE CONTENU PRINCIPAL -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 relative">
+
+    <!-- VUE 1 : FLUX VIDÉO INTERACTIF (TIKTOK STYLE) -->
+    <div id="viewFeed" class="max-w-md mx-auto space-y-6">
+      <div id="feedContainer" class="space-y-6">
+        <!-- Généré dynamiquement par JavaScript -->
+      </div>
+    </div>
+
+    <!-- VUE 2 : MARKETPLACE GRILLE (BOUTIQUE TRADITIONNELLE) -->
+    <div id="viewGrid" class="hidden">
+      <div id="gridContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <!-- Généré dynamiquement par JavaScript -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- TIROIR DE PANIER & GUEST CHECKOUT (ACHAT SANS COMPTE) -->
+  <div id="cartDrawer" class="fixed inset-y-0 right-0 w-full max-w-md bg-slate-900 border-l border-slate-800 z-50 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
+    <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <i data-lucide="shopping-bag" class="w-5 h-5 text-pink-500"></i>
+        <h2 class="font-bold text-lg">Mon Panier Express</h2>
+        <span class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full">Sans compte</span>
+      </div>
+      <button onclick="toggleCartDrawer()" class="text-slate-400 hover:text-white p-1">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <div class="flex-1 overflow-y-auto p-4 space-y-4" id="cartItemsContainer">
+      <!-- Articles du panier insérés ici -->
+    </div>
+
+    <!-- RECAPITULATIF ET COMMISSIONS FONDATION -->
+    <div class="p-4 border-t border-slate-800 bg-slate-950/80 space-y-3">
+      <div class="space-y-1.5 text-xs">
+        <div class="flex justify-between text-slate-400">
+          <span>Sous-total articles</span>
+          <span id="cartSubtotal">$0.00</span>
+        </div>
+        <div class="flex justify-between text-slate-400">
+          <span>Frais de livraison estimés</span>
+          <span id="cartShipping">$4.99</span>
+        </div>
+        <div class="flex justify-between text-emerald-400 text-[11px] pt-1 border-t border-slate-800/60">
+          <span class="flex items-center gap-1"><i data-lucide="check-circle-2" class="w-3 h-3"></i> Commission Garmetics (incluse)</span>
+          <span id="cartCommission" class="font-mono">$0.00</span>
+        </div>
+        <div class="flex justify-between text-base font-bold text-white pt-2 border-t border-slate-800">
+          <span>Total à payer</span>
+          <span id="cartTotal" class="text-pink-400">$0.00</span>
+        </div>
+      </div>
+
+      <!-- FORMULAIRE GUEST CHECKOUT (ACHAT RAPIDE) -->
+      <form id="guestCheckoutForm" onsubmit="processGuestCheckout(event)" class="space-y-2.5 pt-2">
+        <div class="text-xs font-semibold text-slate-300 flex items-center gap-1">
+          <i data-lucide="truck" class="w-3.5 h-3.5 text-pink-400"></i> Coordonnées de livraison rapide
+        </div>
+        <input type="text" required placeholder="Nom complet" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-xs text-white focus:outline-none focus:border-pink-500">
+        <input type="email" required placeholder="Adresse E-mail (pour le suivi du colis)" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-xs text-white focus:outline-none focus:border-pink-500">
+        <input type="text" required placeholder="Adresse postale complète (Rue, Ville, Code Postal)" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-xs text-white focus:outline-none focus:border-pink-500">
+        
+        <button type="submit" class="w-full mt-2 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-2.5 rounded-lg text-sm shadow-lg shadow-pink-500/25 flex items-center justify-center gap-2 transition">
+          <i data-lucide="lock" class="w-4 h-4"></i>
+          <span>Payer la commande en 1 clic</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL DE CREATION DE BOUTIQUE / PUBLICATION PRODUIT (WITH 1GB QUOTA & AUTO SEO) -->
+  <div id="sellerModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <div>
+          <h3 class="font-bold text-lg text-white">Créer ma boutique & Publier un article</h3>
+          <p class="text-xs text-slate-400">Stockage gratuit : <strong class="text-emerald-400">1 Go offert</strong> par vendeur</p>
+        </div>
+        <button onclick="closeModal('sellerModal')" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- BARRE DE QUOTA DU VENDEUR -->
+      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1.5">
+        <div class="flex justify-between text-xs font-medium">
+          <span class="text-slate-400">Espace de stockage utilisé</span>
+          <span class="text-pink-400">18.4 Mo / 1024 Mo (1.8%)</span>
+        </div>
+        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+          <div class="bg-pink-500 h-full w-[1.8%]"></div>
+        </div>
+      </div>
+
+      <form id="publishForm" onsubmit="handlePublishProduct(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Titre de l'article / Produit</label>
+          <input type="text" id="prodTitle" required placeholder="ex: Veste en cuir vintage Mango Taille M" 
+                 oninput="previewSEO()" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-pink-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">Catégorie</label>
+            <select id="prodCategory" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-pink-500">
+              <option value="Vêtements Femme">Vêtements Femme</option>
+              <option value="Vêtements Homme">Vêtements Homme</option>
+              <option value="Cosmétiques & Maquillage">Cosmétiques & Maquillage</option>
+              <option value="Accessoires Mode">Accessoires Mode</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">État du produit</label>
+            <select id="prodCondition" onchange="toggleOriginalPrice(this.value)" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-pink-500">
+              <option value="second_hand">🏷️ Seconde Main (Occasion)</option>
+              <option value="new">✨ Neuf avec étiquette</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div id="originalPriceBox">
+            <label class="block text-slate-300 font-medium mb-1">Prix Neuf d'origine ($)</label>
+            <input type="number" id="prodOriginalPrice" placeholder="ex: 120" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-pink-500">
+          </div>
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">Votre Prix de Vente ($)</label>
+            <input type="number" id="prodPrice" required placeholder="ex: 42" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-pink-500">
+          </div>
+        </div>
+
+        <!-- UPLOAD AVEC COMPRESSION ET CONTROLE DES RATIOS (3:4 & 9:16) -->
+        <div class="border-2 border-dashed border-slate-700 rounded-xl p-4 text-center space-y-2 bg-slate-950/50">
+          <i data-lucide="upload-cloud" class="w-8 h-8 text-pink-400 mx-auto"></i>
+          <p class="text-slate-300 font-medium">Déposez votre photo (Ratio 3:4) ou Vidéo (Ratio 9:16)</p>
+          <p class="text-[11px] text-slate-500">Max 20Mo/vidéo. Le code redimensionnera automatiquement vos fichiers sous la limite de 1Go.</p>
+          <input type="file" id="prodMedia" accept="image/*,video/*" class="hidden" onchange="handleFileSelect(this)">
+          <button type="button" onclick="document.getElementById('prodMedia').click()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-600">Sélectionner un fichier</button>
+          <span id="fileNameDisplay" class="block text-[11px] text-emerald-400 font-mono"></span>
+        </div>
+
+        <!-- PRÉVISUALISATION DU BOOSTER SEO AUTOMATIQUE -->
+        <div class="bg-purple-950/30 border border-purple-800/40 rounded-xl p-3 space-y-1">
+          <div class="flex items-center gap-1.5 text-purple-300 font-semibold text-[11px]">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-pink-400"></i> Moteur SEO Google Automatique
+          </div>
+          <p class="text-[11px] text-slate-400" id="seoPreviewText">Remplissez le titre pour générer les balises Google...</p>
+        </div>
+
+        <button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 font-bold py-2.5 rounded-lg shadow-lg">
+          Mettre en ligne et Booster ma visibilité
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL TABLEAU DE BORD FONDATEUR (ADMIN & COMMISSIONS) -->
+  <div id="adminModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full p-6 space-y-5">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></div>
+          <h3 class="font-bold text-lg text-white">Tableau de Bord Fondateur - Garmetics</h3>
+        </div>
+        <button onclick="closeModal('adminModal')" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- RECAP FINANCIER DES COMMISSIONS -->
+      <div class="grid grid-cols-3 gap-3">
+        <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
+          <span class="text-slate-400 text-[11px] block">Commissions Accumulées</span>
+          <span class="text-xl font-black text-emerald-400">$1,482.50</span>
+          <span class="text-[10px] text-emerald-500/80 block mt-0.5">Taux moyen : 12.5%</span>
+        </div>
+        <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
+          <span class="text-slate-400 text-[11px] block">Volume Brut de Ventes</span>
+          <span class="text-xl font-black text-white">$12,350.00</span>
+          <span class="text-[10px] text-slate-500 block mt-0.5">142 transactions</span>
+        </div>
+        <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
+          <span class="text-slate-400 text-[11px] block">Revenus Pubs AdSense</span>
+          <span class="text-xl font-black text-purple-400">$340.20</span>
+          <span class="text-[10px] text-purple-300/80 block mt-0.5">Visites SEO Google</span>
+        </div>
+      </div>
+
+      <!-- DERNIÈRES COMMANDES ET NOTIFICATION EXPÉDITION VENDEUR -->
+      <div class="space-y-2">
+        <h4 class="text-xs font-semibold text-slate-300">Dernières commandes enregistrées (Guest Checkout)</h4>
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 space-y-2 text-xs">
+          <div class="flex justify-between items-center border-b border-slate-800/80 pb-2">
+            <div>
+              <span class="font-semibold text-white">#CMD-8921</span> - Veste Cuir Vintage (Occasion)
+              <span class="block text-[11px] text-slate-400">Acheteur : Sarah D. (Achat sans compte)</span>
+            </div>
+            <div class="text-right">
+              <span class="text-emerald-400 font-bold">$42.00</span>
+              <span class="block text-[10px] text-purple-400">Commission : $6.30 (15%)</span>
+            </div>
+          </div>
+          <div class="flex justify-between items-center">
+            <div>
+              <span class="font-semibold text-white">#CMD-8920</span> - Sérum Éclat Visage (Neuf)
+              <span class="block text-[11px] text-slate-400">Acheteur : Marc O. (Achat sans compte)</span>
+            </div>
+            <div class="text-right">
+              <span class="text-emerald-400 font-bold">$24.00</span>
+              <span class="block text-[10px] text-purple-400">Commission : $2.40 (10%)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-right">
+        <button onclick="closeModal('adminModal')" class="bg-slate-800 text-slate-200 px-4 py-2 rounded-lg text-xs font-medium">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CODE JAVASCRIPT COMPLET ET AUTONOME -->
+  <script>
+    // 1. DONNÉE INITIALE DE SIMULATION (PRODUITS VIVANTS AU LANCEMENT)
+    const initialProducts = [
+      {
+        id: '1',
+        title: 'Veste en Cuir Vintage Style Bikers',
+        category: 'Vêtements Homme',
+        condition: 'second_hand',
+        priceOriginal: 120,
+        priceSale: 42,
+        discount: 65,
+        storeName: 'RetroMode Paris',
+        imageUrl: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop&q=80',
+        videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-fashion-model-in-a-leather-jacket-41544-large.mp4',
+        seoKeywords: ['veste cuir homme', 'cuir vintage occasion', 'blouson biker pas cher', 'garmetics']
+      },
+      {
+        id: '2',
+        title: 'Sérum Visage Acide Hyaluronique Éclat',
+        category: 'Cosmétiques & Maquillage',
+        condition: 'new',
+        priceOriginal: null,
+        priceSale: 24,
+        discount: null,
+        storeName: 'GlowCosmetics Bio',
+        imageUrl: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&auto=format&fit=crop&q=80',
+        videoUrl: null,
+        seoKeywords: ['serum visage neuf', 'soin peau bio', 'acide hyaluronique pas cher', 'garmetics']
+      },
+      {
+        id: '3',
+        title: 'Robe de Soirée Satin Rose Poudré',
+        category: 'Vêtements Femme',
+        condition: 'second_hand',
+        priceOriginal: 95,
+        priceSale: 35,
+        discount: 63,
+        storeName: 'LuxeSecondeMain',
+        imageUrl: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800&auto=format&fit=crop&q=80',
+        videoUrl: null,
+        seoKeywords: ['robe soiree occasion', 'robe satin pas cher', 'seconde main chic', 'garmetics']
+      },
+      {
+        id: '4',
+        title: 'Palette Maquillage Nude Professional',
+        category: 'Cosmétiques & Maquillage',
+        condition: 'new',
+        priceOriginal: null,
+        priceSale: 18,
+        discount: null,
+        storeName: 'BeautyZone Direct',
+        imageUrl: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=800&auto=format&fit=crop&q=80',
+        videoUrl: null,
+        seoKeywords: ['palette maquillage neuve', 'fard a paupiere nude', 'garmetics']
+      }
+    ];
+
+    let products = [...initialProducts];
+    let cart = [];
+    let activeFilter = 'all';
+
+    // 2. INITIALISATION DES ICÔNES ET DU RENDU
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      renderFeed();
+      renderGrid();
+    });
+
+    // 3. GESTION DES ONGLETS ET VUES
+    function switchTab(view) {
+      const feedEl = document.getElementById('viewFeed');
+      const gridEl = document.getElementById('viewGrid');
+      const btnFeed = document.getElementById('btnViewFeed');
+      const btnGrid = document.getElementById('btnViewGrid');
+
+      if (view === 'feed') {
+        feedEl.classList.remove('hidden');
+        gridEl.classList.add('hidden');
+        btnFeed.className = "px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5 transition bg-pink-600 text-white shadow-sm";
+        btnGrid.className = "px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5 transition text-slate-400 hover:text-slate-200";
+      } else {
+        feedEl.classList.add('hidden');
+        gridEl.classList.remove('hidden');
+        btnGrid.className = "px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5 transition bg-pink-600 text-white shadow-sm";
+        btnFeed.className = "px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5 transition text-slate-400 hover:text-slate-200";
+      }
+    }
+
+    // 4. RENDU DU FLUX VIDÉO (STYLE REELS / TIKTOK)
+    function renderFeed() {
+      const container = document.getElementById('feedContainer');
+      const filtered = getFilteredProducts();
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="text-center py-12 text-slate-400 text-sm">Aucun article ne correspond à votre recherche.</div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(prod => {
+        const isSecondHand = prod.condition === 'second_hand';
+        return `
+          <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl relative">
+            <!-- HEADER PRODUIT -->
+            <div class="p-3 bg-gradient-to-b from-slate-950/80 to-transparent absolute top-0 inset-x-0 z-10 flex justify-between items-center">
+              <span class="text-xs font-bold text-white bg-slate-900/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-slate-700/50">
+                ${prod.storeName}
+              </span>
+              ${isSecondHand ? `
+                <span class="bg-emerald-500 text-slate-950 font-black text-[10px] px-2 py-0.5 rounded-full shadow-lg">
+                  -${prod.discount}% vs Neuf
+                </span>
+              ` : `
+                <span class="bg-purple-500 text-white font-bold text-[10px] px-2 py-0.5 rounded-full">
+                  ✨ NEUF
+                </span>
+              `}
+            </div>
+
+            <!-- MEDIA (VIDÉO OU IMAGE RATIO 3:4) -->
+            <div class="relative aspect-[3/4] bg-slate-950 flex items-center justify-center overflow-hidden">
+              ${prod.videoUrl ? `
+                <video src="${prod.videoUrl}" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
+                <span class="absolute bottom-3 left-3 bg-slate-950/80 text-xs px-2 py-1 rounded text-slate-300 flex items-center gap-1">
+                  <i data-lucide="video" class="w-3 h-3 text-pink-400"></i> Preuve Vidéo
+                </span>
+              ` : `
+                <img src="${prod.imageUrl}" alt="${prod.title}" class="w-full h-full object-cover">
+              `}
+            </div>
+
+            <!-- INFOS SEO & ACHAT RAPIDE -->
+            <div class="p-4 space-y-3 bg-slate-900">
+              <div>
+                <h3 class="font-bold text-sm text-white">${prod.title}</h3>
+                <p class="text-[11px] text-slate-400">Catégorie : ${prod.category}</p>
+              </div>
+
+              <!-- PRIX & ECONOMIE -->
+              <div class="flex items-baseline justify-between">
+                <div>
+                  <span class="text-xl font-black text-pink-400">$${prod.priceSale.toFixed(2)}</span>
+                  ${isSecondHand && prod.priceOriginal ? `
+                    <span class="text-xs text-slate-500 line-through ml-2">$${prod.priceOriginal.toFixed(2)}</span>
+                  ` : ''}
+                </div>
+                <button onclick="addToCart('${prod.id}')" class="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-lg shadow-pink-500/20">
+                  <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+                  Acheter sans compte
+                </button>
+              </div>
+
+              <!-- BALISES SEO GOOGLE ENCADRÉES -->
+              <div class="pt-2 border-t border-slate-800/80 flex flex-wrap gap-1">
+                ${prod.seoKeywords.map(kw => `<span class="text-[9px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded">#${kw}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    // 5. RENDU DE LA GRILLE BOUTIQUE
+    function renderGrid() {
+      const container = document.getElementById('gridContainer');
+      const filtered = getFilteredProducts();
+
+      container.innerHTML = filtered.map(prod => {
+        const isSecondHand = prod.condition === 'second_hand';
+        return `
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-slate-700 transition">
+            <div class="relative aspect-[3/4] bg-slate-950">
+              <img src="${prod.imageUrl}" alt="${prod.title}" class="w-full h-full object-cover">
+              <span class="absolute top-2 left-2 text-[9px] font-bold px-2 py-0.5 rounded-full ${isSecondHand ? 'bg-emerald-500 text-slate-950' : 'bg-purple-500 text-white'}">
+                ${isSecondHand ? 'OCCASION' : 'NEUF'}
+              </span>
+            </div>
+            <div class="p-3 space-y-2">
+              <h4 class="font-bold text-xs text-white line-clamp-1">${prod.title}</h4>
+              <div class="flex items-baseline justify-between">
+                <span class="font-black text-sm text-pink-400">$${prod.priceSale.toFixed(2)}</span>
+                <button onclick="addToCart('${prod.id}')" class="p-1.5 bg-slate-800 text-pink-400 hover:bg-pink-500 hover:text-white rounded-lg">
+                  <i data-lucide="plus" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    // 6. FILTRES & RECHERCHE
+    function filterCondition(cond) {
+      activeFilter = cond;
+      ['filterAll', 'filterSecondHand', 'filterNew'].forEach(id => {
+        const btn = document.getElementById(id);
+        btn.className = "px-3 py-1 rounded-full bg-slate-800/60 text-slate-300 border border-slate-700";
+      });
+      if(cond === 'all') document.getElementById('filterAll').className = "px-3 py-1 rounded-full bg-slate-800 text-pink-400 font-semibold border border-pink-500/30";
+      if(cond === 'second_hand') document.getElementById('filterSecondHand').className = "px-3 py-1 rounded-full bg-emerald-950 text-emerald-400 font-semibold border border-emerald-500/30";
+      if(cond === 'new') document.getElementById('filterNew').className = "px-3 py-1 rounded-full bg-purple-950 text-purple-400 font-semibold border border-purple-500/30";
+
+      renderFeed();
+      renderGrid();
+    }
+
+    function getFilteredProducts() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      return products.filter(p => {
+        const matchesCondition = activeFilter === 'all' || p.condition === activeFilter;
+        const matchesSearch = p.title.toLowerCase().includes(query) || p.category.toLowerCase().includes(query);
+        return matchesCondition && matchesSearch;
+      });
+    }
+
+    function handleSearch() {
+      renderFeed();
+      renderGrid();
+    }
+
+    // 7. GESTION DU PANIER & CALCUL DES COMMISSIONS
+    function addToCart(productId) {
+      const prod = products.find(p => p.id === productId);
+      if (!prod) return;
+      cart.push(prod);
+      updateCartUI();
+      openCartDrawer();
+    }
+
+    function updateCartUI() {
+      const badge = document.getElementById('cartCountBadge');
+      badge.innerText = cart.length;
+      badge.classList.toggle('hidden', cart.length === 0);
+
+      const container = document.getElementById('cartItemsContainer');
+      if (cart.length === 0) {
+        container.innerHTML = `<div class="text-center py-8 text-slate-500 text-xs">Votre panier express est vide.</div>`;
+      } else {
+        container.innerHTML = cart.map((item, idx) => `
+          <div class="flex items-center gap-3 bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+            <img src="${item.imageUrl}" class="w-12 h-16 object-cover rounded-lg">
+            <div class="flex-1 min-w-0">
+              <h5 class="text-xs font-bold text-white truncate">${item.title}</h5>
+              <span class="text-[10px] text-slate-400 block">${item.condition === 'second_hand' ? '🏷️ Occasion' : '✨ Neuf'}</span>
+              <span class="text-xs font-bold text-pink-400">$${item.priceSale.toFixed(2)}</span>
+            </div>
+            <button onclick="removeFromCart(${idx})" class="text-slate-500 hover:text-red-400 p-1">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+        `).join('');
+      }
+
+      // CALCUL FINANCIER & COMMISSION
+      let subtotal = 0;
+      let commissionTotal = 0;
+
+      cart.forEach(item => {
+        subtotal += item.priceSale;
+        // Commission : 15% pour seconde main, 10% pour neuf
+        const rate = item.condition === 'second_hand' ? 0.15 : 0.10;
+        commissionTotal += (item.priceSale * rate);
+      });
+
+      const shipping = subtotal > 50 || subtotal === 0 ? 0 : 4.99;
+      const total = subtotal + shipping;
+
+      document.getElementById('cartSubtotal').innerText = `$${subtotal.toFixed(2)}`;
+      document.getElementById('cartShipping').innerText = shipping === 0 ? 'GRATUIT' : `$${shipping.toFixed(2)}`;
+      document.getElementById('cartCommission').innerText = `$${commissionTotal.toFixed(2)}`;
+      document.getElementById('cartTotal').innerText = `$${total.toFixed(2)}`;
+
+      lucide.createIcons();
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    }
+
+    function toggleCartDrawer() {
+      document.getElementById('cartDrawer').classList.toggle('translate-x-full');
+    }
+    function openCartDrawer() {
+      document.getElementById('cartDrawer').classList.remove('translate-x-full');
+    }
+
+    function processGuestCheckout(e) {
+      e.preventDefault();
+      if (cart.length === 0) return alert('Votre panier est vide.');
+      alert('✅ Commande validée avec succès ! Aucun mot de passe requis. Le vendeur a reçu l\'ordre d\'expédition.');
+      cart = [];
+      updateCartUI();
+      toggleCartDrawer();
+    }
+
+    // 8. MODALS & SEO PREVIEW
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+    function toggleOriginalPrice(val) {
+      document.getElementById('originalPriceBox').style.display = val === 'second_hand' ? 'block' : 'none';
+    }
+
+    function previewSEO() {
+      const title = document.getElementById('prodTitle').value;
+      const cond = document.getElementById('prodCondition').value;
+      const preview = document.getElementById('seoPreviewText');
+
+      if (!title) {
+        preview.innerText = "Remplissez le titre pour générer les balises Google...";
+        return;
+      }
+
+      const kw = [title.toLowerCase(), cond === 'second_hand' ? 'seconde main' : 'neuf', 'garmetics', 'pas cher'];
+      preview.innerHTML = `<strong>Titre Google :</strong> ${title} ${cond === 'second_hand' ? 'Occasion' : 'Neuf'} | Garmetics<br><strong>Mots-Clés :</strong> ${kw.join(', ')}`;
+    }
+
+    function handleFileSelect(input) {
+      if (input.files && input.files[0]) {
+        document.getElementById('fileNameDisplay').innerText = `Fichier sélectionné : ${input.files[0].name} (${(input.files[0].size / 1024 / 1024).toFixed(2)} Mo)`;
+      }
+    }
+
+    function handlePublishProduct(e) {
+      e.preventDefault();
+      const title = document.getElementById('prodTitle').value;
+      const category = document.getElementById('prodCategory').value;
+      const condition = document.getElementById('prodCondition').value;
+      const priceSale = parseFloat(document.getElementById('prodPrice').value);
+      const priceOriginal = parseFloat(document.getElementById('prodOriginalPrice').value) || (priceSale * 2);
+
+      const newProd = {
+        id: String(Date.now()),
+        title,
+        category,
+        condition,
+        priceOriginal: condition === 'second_hand' ? priceOriginal : null,
+        priceSale,
+        discount: condition === 'second_hand' ? Math.round(((priceOriginal - priceSale) / priceOriginal) * 100) : null,
+        storeName: 'Ma Boutique VIP',
+        imageUrl: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&auto=format&fit=crop&q=80',
+        videoUrl: null,
+        seoKeywords: [title.toLowerCase(), category.toLowerCase(), condition === 'second_hand' ? 'occasion' : 'neuf', 'garmetics']
+      };
+
+      products.unshift(newProd);
+      renderFeed();
+      renderGrid();
+      closeModal('sellerModal');
+      alert('🎉 Votre article est en ligne ! Le booster SEO Google a été généré.');
+    }
+  </script>
+</body>
+</html>
