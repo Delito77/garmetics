@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-950 text-slate-100">
+<html lang="en" class="h-full bg-slate-950 text-slate-100" id="htmlRoot">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,30 +25,27 @@
         </div>
         <div>
           <span class="text-xl font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">Garmetics</span>
-          <span class="text-[10px] text-emerald-400 block -mt-1 font-semibold tracking-wider">GLOBAL MARKETPLACE</span>
+          <span class="text-[10px] text-emerald-400 block -mt-1 font-semibold tracking-wider" id="logoSub">GLOBAL MARKETPLACE</span>
         </div>
       </div>
 
       <!-- SEARCH BAR -->
       <div class="hidden md:flex flex-1 max-w-md relative">
-        <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search dress, serum, leather jacket, brand..." 
+        <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search dress, serum, jacket, brand..." 
                class="w-full bg-slate-800/80 border border-slate-700/80 rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition text-slate-200 placeholder-slate-400">
         <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-2.5"></i>
       </div>
 
       <!-- CONTROLS & ACTIONS -->
       <div class="flex items-center gap-2 sm:gap-3">
-        <div class="bg-slate-800/80 p-1 rounded-lg border border-slate-700/80 flex items-center gap-1">
-          <button id="btnViewFeed" onclick="switchTab('feed')" class="px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5 transition bg-pink-600 text-white shadow-sm">
-            <span class="hidden sm:inline">Streaming Grid</span>
-          </button>
-          <button id="btnViewGrid" onclick="switchTab('grid')" class="px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5 transition text-slate-400 hover:text-slate-200">
-            <span class="hidden sm:inline">Catalog View</span>
-          </button>
-        </div>
+        
+        <!-- LANGUAGE SWITCHER BUTTON (FR / EN) -->
+        <button onclick="toggleLanguage()" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-pink-400 font-bold text-xs rounded-lg border border-slate-700 transition flex items-center gap-1" title="Switch Language / Changer de langue">
+          🌐 <span id="langLabel">FR / EN</span>
+        </button>
 
         <button onclick="openSellerModal()" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-semibold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 transition shadow-lg shadow-emerald-500/10">
-          <span>Sell Now (Free 1GB)</span>
+          <span id="sellBtnText">Sell Now (Free 1GB)</span>
         </button>
 
         <button onclick="toggleCartDrawer()" class="relative p-2 text-pink-400 hover:text-pink-300 bg-slate-800 rounded-lg border border-slate-700 flex items-center justify-center">
@@ -66,15 +63,15 @@
   <!-- BANNER -->
   <section class="bg-gradient-to-r from-purple-900 via-pink-900 to-slate-900 border-b border-pink-500/30 px-4 py-2.5 text-center text-xs font-bold text-white uppercase tracking-wider flex items-center justify-center gap-3">
     <span class="bg-pink-500 text-slate-950 px-2 py-0.5 rounded text-[10px] font-extrabold animate-pulse">SEO BOOST</span>
-    <span>SELL YOUR FASHION & COSMETICS WORLDWIDE! FREE 1GB STORAGE & AUTOMATIC GOOGLE RANKING!</span>
-    <button onclick="openSellerModal()" class="bg-white text-slate-950 hover:bg-pink-300 px-2.5 py-0.5 rounded font-black text-[11px] transition">START SELLING &rarr;</button>
+    <span id="bannerText">SELL YOUR FASHION & COSMETICS WORLDWIDE! FREE 1GB STORAGE & AUTOMATIC GOOGLE RANKING!</span>
+    <button onclick="openSellerModal()" class="bg-white text-slate-950 hover:bg-pink-300 px-2.5 py-0.5 rounded font-black text-[11px] transition" id="bannerBtn">START SELLING &rarr;</button>
   </section>
 
   <!-- CONDITION FILTER BAR -->
   <div class="bg-slate-900 border-b border-slate-800/80 py-2.5 px-4 overflow-x-auto">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-4 text-xs">
       <div class="flex items-center gap-2 shrink-0">
-        <span class="text-slate-400 font-medium mr-1">Condition:</span>
+        <span class="text-slate-400 font-medium mr-1" id="filterLabel">Condition:</span>
         <button onclick="filterCondition('all')" id="filterAll" class="px-3 py-1 rounded-full bg-slate-800 text-pink-400 font-semibold border border-pink-500/30">All Items</button>
         <button onclick="filterCondition('second_hand')" id="filterSecondHand" class="px-3 py-1 rounded-full bg-slate-800/60 text-slate-300 hover:bg-slate-800 border border-slate-700">🏷️ Pre-Owned (Secondhand)</button>
         <button onclick="filterCondition('new')" id="filterNew" class="px-3 py-1 rounded-full bg-slate-800/60 text-slate-300 hover:bg-slate-800 border border-slate-700">✨ Brand New</button>
@@ -87,25 +84,22 @@
     <div id="viewFeed">
       <div id="feedContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
     </div>
-    <div id="viewGrid" class="hidden">
-      <div id="gridContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
-    </div>
   </main>
 
   <!-- CART DRAWER -->
   <div id="cartDrawer" class="fixed inset-y-0 right-0 w-full max-w-md bg-slate-900 border-l border-slate-800 z-50 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
     <div class="p-4 border-b border-slate-800 flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <h2 class="font-bold text-lg">Your Cart Carriage</h2>
+        <h2 class="font-bold text-lg" id="cartTitle">Your Cart Carriage</h2>
       </div>
       <button onclick="toggleCartDrawer()" class="text-slate-400 hover:text-white p-1 font-bold text-lg">✕</button>
     </div>
     <div class="flex-1 overflow-y-auto p-4 space-y-4" id="cartItemsContainer"></div>
     <div class="p-4 border-t border-slate-800 bg-slate-950/80 space-y-3">
       <div class="space-y-1.5 text-xs">
-        <div class="flex justify-between text-slate-400"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
-        <div class="flex justify-between text-slate-400"><span>Shipping</span><span id="cartShipping">$4.99</span></div>
-        <div class="flex justify-between text-base font-bold text-white pt-2 border-t border-slate-800"><span>Total</span><span id="cartTotal" class="text-pink-400">$0.00</span></div>
+        <div class="flex justify-between text-slate-400"><span id="subtotalText">Subtotal</span><span id="cartSubtotal">$0.00</span></div>
+        <div class="flex justify-between text-slate-400"><span id="shippingText">Shipping</span><span id="cartShipping">$4.99</span></div>
+        <div class="flex justify-between text-base font-bold text-white pt-2 border-t border-slate-800"><span id="totalText">Total</span><span id="cartTotal" class="text-pink-400">$0.00</span></div>
       </div>
       <form id="guestCheckoutForm" onsubmit="processGuestCheckout(event)" class="space-y-2.5 pt-2">
         <input type="text" id="custName" required placeholder="Full Name" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-xs text-white">
@@ -120,7 +114,7 @@
   <div id="sellerModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 my-auto max-h-[85vh] flex flex-col shadow-2xl">
       <div class="flex justify-between items-center border-b border-slate-800 pb-3 shrink-0">
-        <h3 class="font-bold text-lg text-white">Create Store & Publish Item</h3>
+        <h3 class="font-bold text-lg text-white" id="modalTitle">Create Store & Publish Item</h3>
         <button onclick="closeSellerModal()" class="text-slate-400 hover:text-white font-bold text-lg">✕</button>
       </div>
       <div class="overflow-y-auto py-4 space-y-4 pr-1 flex-1">
@@ -181,7 +175,7 @@
   <div id="adminModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full p-6 space-y-5">
       <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-        <h3 class="font-bold text-lg text-white">Founder Dashboard</h3>
+        <h3 class="font-bold text-lg text-white" id="adminTitle">Founder Dashboard</h3>
         <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white font-bold text-lg">✕</button>
       </div>
       <div class="space-y-2">
@@ -190,7 +184,7 @@
         </div>
       </div>
       <div class="text-right">
-        <button onclick="closeAdminModal()" class="bg-slate-800 text-slate-200 px-4 py-2 rounded-lg text-xs font-medium">Close</button>
+        <button onclick="closeAdminModal()" class="bg-slate-800 text-slate-200 px-4 py-2 rounded-lg text-xs font-medium" id="closeAdminBtn">Close</button>
       </div>
     </div>
   </div>
@@ -209,6 +203,81 @@
       console.log("Supabase initialization error");
     }
 
+    let currentLang = 'en';
+
+    const translations = {
+      en: {
+        logoSub: "GLOBAL MARKETPLACE",
+        searchPlaceholder: "Search dress, serum, jacket, brand...",
+        sellBtnText: "Sell Now (Free 1GB)",
+        bannerText: "SELL YOUR FASHION & COSMETICS WORLDWIDE! FREE 1GB STORAGE & AUTOMATIC GOOGLE RANKING!",
+        bannerBtn: "START SELLING →",
+        filterLabel: "Condition:",
+        filterAll: "All Items",
+        filterSecondHand: "🏷️ Pre-Owned (Secondhand)",
+        filterNew: "✨ Brand New",
+        cartTitle: "Your Cart Carriage",
+        subtotalText: "Subtotal",
+        shippingText: "Shipping",
+        totalText: "Total",
+        checkoutBtn: "Complete Order Now",
+        modalTitle: "Create Store & Publish Item",
+        submitProdBtn: "PUBLISH ITEM & BOOST GOOGLE SEO",
+        adminTitle: "Founder Dashboard",
+        closeAdminBtn: "Close",
+        buy: "Buy"
+      },
+      fr: {
+        logoSub: "MARCHÉ MONDIAL",
+        searchPlaceholder: "Rechercher robe, sérum, veste, marque...",
+        sellBtnText: "Vendre (1Go Gratuit)",
+        bannerText: "VENDEZ VOS VÊTEMENTS & COSMÉTIQUES DANS LE MONDE ! STOCKAGE 1GO OFFERT & SEO GOOGLE !",
+        bannerBtn: "COMMENCER →",
+        filterLabel: "État :",
+        filterAll: "Tous les articles",
+        filterSecondHand: "🏷️ Seconde Main (Occasion)",
+        filterNew: "✨ Neuf",
+        cartTitle: "Votre Panier Chariot",
+        subtotalText: "Sous-total",
+        shippingText: "Livraison",
+        totalText: "Total",
+        checkoutBtn: "Finaliser la commande",
+        modalTitle: "Créer sa boutique & Publier",
+        submitProdBtn: "PUBLIER L'ARTICLE & BOOSTER LE SEO GOOGLE",
+        adminTitle: "Tableau de Bord Fondateur",
+        closeAdminBtn: "Fermer",
+        buy: "Acheter"
+      }
+    };
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'en' ? 'fr' : 'en';
+      document.getElementById('langLabel').innerText = currentLang.toUpperCase();
+      const t = translations[currentLang];
+      
+      document.getElementById('logoSub').innerText = t.logoSub;
+      document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+      document.getElementById('sellBtnText').innerText = t.sellBtnText;
+      document.getElementById('bannerText').innerText = t.bannerText;
+      document.getElementById('bannerBtn').innerText = t.bannerBtn;
+      document.getElementById('filterLabel').innerText = t.filterLabel;
+      document.getElementById('filterAll').innerText = t.filterAll;
+      document.getElementById('filterSecondHand').innerText = t.filterSecondHand;
+      document.getElementById('filterNew').innerText = t.filterNew;
+      document.getElementById('cartTitle').innerText = t.cartTitle;
+      document.getElementById('subtotalText').innerText = t.subtotalText;
+      document.getElementById('shippingText').innerText = t.shippingText;
+      document.getElementById('totalText').innerText = t.totalText;
+      document.getElementById('checkoutBtn').innerText = t.checkoutBtn;
+      document.getElementById('modalTitle').innerText = t.modalTitle;
+      document.getElementById('submitProdBtn').innerText = t.submitProdBtn;
+      document.getElementById('adminTitle').innerText = t.adminTitle;
+      document.getElementById('closeAdminBtn').innerText = t.closeAdminBtn;
+
+      renderFeed();
+    }
+
+    // LISTE ÉTENDUE D'EXEMPLES D'ITEMS (NOMBREUX PRODUITS)
     const defaultProducts = [
       {
         id: '1',
@@ -235,6 +304,84 @@
         image_url: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&auto=format&fit=crop&q=80',
         video_url: null,
         seo_keywords: ['glow serum', 'skincare', 'garmetics']
+      },
+      {
+        id: '3',
+        title: 'Satin Powder Rose Evening Dress',
+        category: "Women's Clothing",
+        condition: 'second_hand',
+        price_original: 95,
+        price_sale: 35,
+        discount: 63,
+        store_name: 'LuxeSecondHand',
+        image_url: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800&auto=format&fit=crop&q=80',
+        video_url: null,
+        seo_keywords: ['evening dress', 'satin dress', 'garmetics']
+      },
+      {
+        id: '4',
+        title: 'Nude Professional Eyeshadow Palette',
+        category: 'Cosmetics & Makeup',
+        condition: 'new',
+        price_original: null,
+        price_sale: 18,
+        discount: null,
+        store_name: 'BeautyZone Direct',
+        image_url: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=800&auto=format&fit=crop&q=80',
+        video_url: null,
+        seo_keywords: ['makeup palette', 'eyeshadow', 'garmetics']
+      },
+      {
+        id: '5',
+        title: 'Classic Denim Blue Jeans Slim Fit',
+        category: "Men's Clothing",
+        condition: 'new',
+        price_original: null,
+        price_sale: 39,
+        discount: null,
+        store_name: 'DenimStore Global',
+        image_url: 'https://images.unsplash.com/photo-1542272604-787c96355353?w=800&auto=format&fit=crop&q=80',
+        video_url: null,
+        seo_keywords: ['denim jeans', 'slim fit', 'garmetics']
+      },
+      {
+        id: '6',
+        title: 'Matte Liquid Lipstick Ruby Red',
+        category: 'Cosmetics & Makeup',
+        condition: 'new',
+        price_original: null,
+        price_sale: 15,
+        discount: null,
+        store_name: 'ParisMakeup',
+        image_url: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=800&auto=format&fit=crop&q=80',
+        video_url: null,
+        seo_keywords: ['lipstick', 'matte red', 'garmetics']
+      },
+      {
+        id: '7',
+        title: 'Bohemian Summer Floral Dress',
+        category: "Women's Clothing",
+        condition: 'second_hand',
+        price_original: 70,
+        price_sale: 25,
+        discount: 64,
+        store_name: 'BohoChic Shop',
+        image_url: 'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=800&auto=format&fit=crop&q=80',
+        video_url: null,
+        seo_keywords: ['floral dress', 'summer boho', 'garmetics']
+      },
+      {
+        id: '8',
+        title: 'Luxury Gold Chain Fashion Necklace',
+        category: 'Fashion Accessories',
+        condition: 'new',
+        price_original: null,
+        price_sale: 29,
+        discount: null,
+        store_name: 'AccessorizeMe',
+        image_url: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&auto=format&fit=crop&q=80',
+        video_url: null,
+        seo_keywords: ['gold necklace', 'accessories', 'garmetics']
       }
     ];
 
@@ -244,7 +391,6 @@
 
     window.onload = function() {
       renderFeed();
-      renderGrid();
       fetchProductsFromSupabase();
     };
 
@@ -253,31 +399,11 @@
       try {
         const { data, error } = await supabaseClient.from('products').select('*').order('created_at', { ascending: false });
         if (!error && data && data.length > 0) {
-          products = data;
+          products = [...data, ...defaultProducts];
           renderFeed();
-          renderGrid();
         }
       } catch (err) {
-        console.log("Using local default items");
-      }
-    }
-
-    function switchTab(view) {
-      const feedEl = document.getElementById('viewFeed');
-      const gridEl = document.getElementById('viewGrid');
-      const btnFeed = document.getElementById('btnViewFeed');
-      const btnGrid = document.getElementById('btnViewGrid');
-
-      if (view === 'feed') {
-        feedEl.classList.remove('hidden');
-        gridEl.classList.add('hidden');
-        btnFeed.className = "px-3 py-1.5 rounded-md text-xs font-medium bg-pink-600 text-white shadow-sm";
-        btnGrid.className = "px-3 py-1.5 rounded-md text-xs font-medium text-slate-400 hover:text-slate-200";
-      } else {
-        feedEl.classList.add('hidden');
-        gridEl.classList.remove('hidden');
-        btnGrid.className = "px-3 py-1.5 rounded-md text-xs font-medium bg-pink-600 text-white shadow-sm";
-        btnFeed.className = "px-3 py-1.5 rounded-md text-xs font-medium text-slate-400 hover:text-slate-200";
+        console.log("Using default items");
       }
     }
 
@@ -286,11 +412,13 @@
       if (!container) return;
       const filtered = getFilteredProducts();
 
+      const t = translations[currentLang];
+
       container.innerHTML = filtered.map(prod => `
         <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-xl flex flex-col justify-between relative group">
           <div class="p-3 bg-gradient-to-b from-slate-950/90 to-transparent absolute top-0 inset-x-0 z-10 flex justify-between items-center">
             <span class="text-xs font-bold text-white bg-slate-900/70 px-2.5 py-1 rounded-full">${prod.store_name || prod.storeName || 'Global Partner'}</span>
-            <span class="bg-emerald-500 text-slate-950 font-black text-[10px] px-2 py-0.5 rounded-full">${prod.condition === 'second_hand' ? 'PRE-OWNED' : 'NEW'}</span>
+            <span class="bg-emerald-500 text-slate-950 font-black text-[10px] px-2 py-0.5 rounded-full">${prod.condition === 'second_hand' ? (currentLang === 'fr' ? 'OCCASION' : 'PRE-OWNED') : (currentLang === 'fr' ? 'NEUF' : 'NEW')}</span>
           </div>
           <div class="relative aspect-[3/4] bg-slate-950 flex items-center justify-center overflow-hidden">
             ${prod.video_url || prod.videoUrl ? `
@@ -306,28 +434,7 @@
             </div>
             <div class="flex items-center justify-between pt-2 border-t border-slate-800">
               <span class="text-xl font-black text-pink-400">$${parseFloat(prod.price_sale || prod.priceSale || 0).toFixed(2)}</span>
-              <button onclick="addToCart('${prod.id}')" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold px-3 py-1.5 rounded-xl text-xs">Buy</button>
-            </div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderGrid() {
-      const container = document.getElementById('gridContainer');
-      if (!container) return;
-      const filtered = getFilteredProducts();
-
-      container.innerHTML = filtered.map(prod => `
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col justify-between">
-          <div class="relative aspect-[3/4] bg-slate-950">
-            <img src="${prod.image_url || prod.imageUrl || 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800'}" class="w-full h-full object-cover">
-          </div>
-          <div class="p-3 space-y-2">
-            <h4 class="font-bold text-xs text-white line-clamp-1">${prod.title}</h4>
-            <div class="flex items-center justify-between">
-              <span class="font-black text-sm text-pink-400">$${parseFloat(prod.price_sale || prod.priceSale || 0).toFixed(2)}</span>
-              <button onclick="addToCart('${prod.id}')" class="bg-pink-600 text-white px-2 py-1 rounded text-xs">Buy</button>
+              <button onclick="addToCart('${prod.id}')" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold px-3 py-1.5 rounded-xl text-xs">${t.buy}</button>
             </div>
           </div>
         </div>
@@ -345,7 +452,6 @@
       if(cond === 'new' && document.getElementById('filterNew')) document.getElementById('filterNew').className = "px-3 py-1 rounded-full bg-purple-950 text-purple-400 font-semibold border border-purple-500/30";
 
       renderFeed();
-      renderGrid();
     }
 
     function getFilteredProducts() {
@@ -360,7 +466,6 @@
 
     function handleSearch() {
       renderFeed();
-      renderGrid();
     }
 
     function addToCart(productId) {
@@ -380,7 +485,7 @@
       const container = document.getElementById('cartItemsContainer');
       if (container) {
         if (cart.length === 0) {
-          container.innerHTML = `<div class="text-center py-8 text-slate-500 text-xs">Your cart is empty.</div>`;
+          container.innerHTML = `<div class="text-center py-8 text-slate-500 text-xs">${currentLang === 'fr' ? 'Votre panier est vide.' : 'Your cart is empty.'}</div>`;
         } else {
           container.innerHTML = cart.map((item, idx) => `
             <div class="flex items-center gap-3 bg-slate-950 p-2.5 rounded-xl border border-slate-800">
@@ -388,7 +493,7 @@
                 <h5 class="text-xs font-bold text-white truncate">${item.title}</h5>
                 <span class="text-xs font-bold text-pink-400">$${parseFloat(item.price_sale || item.priceSale || 0).toFixed(2)}</span>
               </div>
-              <button onclick="cart.splice(${idx},1);updateCartUI();" class="text-red-400 text-xs">Remove</button>
+              <button onclick="cart.splice(${idx},1);updateCartUI();" class="text-red-400 text-xs">${currentLang === 'fr' ? 'Retirer' : 'Remove'}</button>
             </div>
           `).join('');
         }
@@ -459,10 +564,9 @@
           await supabaseClient.from('products').insert([newProd]);
         }
         products.unshift(newProd);
-        alert('🎉 Product published successfully!');
+        alert(currentLang === 'fr' ? '🎉 Article publié avec succès !' : '🎉 Product published successfully!');
         closeSellerModal();
         renderFeed();
-        renderGrid();
       } catch (err) {
         alert('Published locally.');
       }
@@ -470,7 +574,7 @@
 
     async function processGuestCheckout(e) {
       e.preventDefault();
-      alert('✅ Order successfully placed!');
+      alert(currentLang === 'fr' ? '✅ Commande validée avec succès !' : '✅ Order successfully placed!');
       cart = [];
       updateCartUI();
       toggleCartDrawer();
