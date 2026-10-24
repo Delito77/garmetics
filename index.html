@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="fr" class="h-full bg-slate-950 text-slate-100">
+<html lang="en" class="h-full bg-slate-950 text-slate-100">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Garmetics.com - Mode & Cosmétiques | Neuf & Seconde Main</title>
+  <title>Garmetics.com - Global Fashion & Cosmetics Marketplace | New & Pre-Owned</title>
   
-  <!-- Meta SEO de base générés pour Google -->
-  <meta name="description" content="Découvrez Garmetics.com, la marketplace de mode et cosmétiques. Achetez neuf ou d'occasion à prix bas avec vidéos d'essayage et livraison rapide sans création de compte.">
-  <meta name="keywords" content="mode, cosmétiques, seconde main, vêtements occasion, maquillage pas cher, garmetics, vêtement neuf, friperie en ligne">
+  <!-- Global SEO Meta Tags -->
+  <meta name="description" content="Garmetics.com - The ultimate global marketplace for new & secondhand fashion and cosmetics. Sell for free with 1GB storage, enjoy video proofs, and buy with instant guest checkout!">
+  <meta name="keywords" content="FASHION, COSMETICS, SECONDHAND CLOTHES, VINTAGE FASHION, MAKEUP, FREE VENDOR STORE, SELL CLOTHES ONLINE, GARMETICS">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -18,7 +18,7 @@
 </head>
 <body class="h-full flex flex-col font-sans bg-slate-950 text-slate-100 antialiased selection:bg-pink-500 selection:text-white">
 
-  <!-- BARRE DE NAVIGATION PRINCIPALE -->
+  <!-- MAIN NAVIGATION HEADER -->
   <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
       
@@ -29,98 +29,102 @@
         </div>
         <div>
           <span class="text-xl font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">Garmetics</span>
-          <span class="text-[10px] text-emerald-400 block -mt-1 font-semibold tracking-wider">SEO BOOSTED</span>
+          <span class="text-[10px] text-emerald-400 block -mt-1 font-semibold tracking-wider">GLOBAL MARKETPLACE</span>
         </div>
       </div>
 
-      <!-- RECHERCHE OPTIMISÉE SEO -->
+      <!-- SEARCH BAR -->
       <div class="hidden md:flex flex-1 max-w-md relative">
-        <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Rechercher une robe, sérum, veste cuir, taille..." 
+        <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search dress, serum, leather jacket, brand..." 
                class="w-full bg-slate-800/80 border border-slate-700/80 rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition text-slate-200 placeholder-slate-400">
         <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-2.5"></i>
       </div>
 
-      <!-- SÉLECTEUR DE VUE & ACTIONS -->
+      <!-- CONTROLS & SHOPPING CART ICON -->
       <div class="flex items-center gap-2 sm:gap-3">
+        <!-- View Toggle -->
         <div class="bg-slate-800/80 p-1 rounded-lg border border-slate-700/80 flex items-center gap-1">
           <button id="btnViewFeed" onclick="switchTab('feed')" class="px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5 transition bg-pink-600 text-white shadow-sm">
             <i data-lucide="play-square" class="w-3.5 h-3.5"></i>
-            <span class="hidden sm:inline">Flux Streaming</span>
+            <span class="hidden sm:inline">Streaming Grid</span>
           </button>
           <button id="btnViewGrid" onclick="switchTab('grid')" class="px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5 transition text-slate-400 hover:text-slate-200">
             <i data-lucide="grid" class="w-3.5 h-3.5"></i>
-            <span class="hidden sm:inline">Grille Catalogue</span>
+            <span class="hidden sm:inline">Catalog View</span>
           </button>
         </div>
 
+        <!-- Sell Button -->
         <button onclick="openModal('sellerModal')" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-semibold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 transition shadow-lg shadow-emerald-500/10">
           <i data-lucide="plus-circle" class="w-4 h-4"></i>
-          <span>Vendre (Gratuit 1Go)</span>
+          <span>Sell Now (Free 1GB)</span>
         </button>
 
+        <!-- Standard Shopping Cart Icon Button -->
         <button onclick="toggleCartDrawer()" class="relative p-2 text-slate-300 hover:text-white bg-slate-800 rounded-lg border border-slate-700">
-          <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+          <i data-lucide="shopping-cart" class="w-5 h-5 text-pink-400"></i>
           <span id="cartCountBadge" class="absolute -top-1.5 -right-1.5 bg-pink-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-slate-950 hidden">0</span>
         </button>
 
-        <button onclick="openModal('adminModal')" class="p-2 text-purple-400 hover:text-purple-300 bg-purple-950/40 border border-purple-800/50 rounded-lg" title="Tableau de Bord Fondateur">
+        <!-- Founder Dashboard Icon -->
+        <button onclick="openModal('adminModal')" class="p-2 text-purple-400 hover:text-purple-300 bg-purple-950/40 border border-purple-800/50 rounded-lg" title="Founder Dashboard">
           <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- BANNIÈRE D'INCITATION VENDEURS -->
-  <section class="bg-gradient-to-r from-purple-900/60 via-pink-900/40 to-slate-900 border-b border-pink-500/20 px-4 py-2 text-center text-xs text-pink-200 flex items-center justify-center gap-2">
-    <span class="bg-pink-500 text-slate-950 font-bold px-1.5 py-0.5 rounded text-[10px] uppercase tracking-wide">Boost SEO Vendeur</span>
-    <span>Postez vos vêtements & cosmétiques : notre moteur génère automatiquement vos mots-clés Google pour vous amener des clients !</span>
-    <button onclick="openModal('sellerModal')" class="underline font-bold text-white hover:text-pink-300 ml-1">Ouvrir ma boutique &rarr;</button>
+  <!-- HIGH-IMPACT UPPERCASE SEO PROMOTIONAL BANNER FOR VENDORS -->
+  <section class="bg-gradient-to-r from-purple-900 via-pink-900 to-slate-900 border-b border-pink-500/30 px-4 py-2.5 text-center text-xs font-bold text-white uppercase tracking-wider flex items-center justify-center gap-3">
+    <span class="bg-pink-500 text-slate-950 px-2 py-0.5 rounded text-[10px] font-extrabold animate-pulse">SEO BOOST</span>
+    <span>SELL YOUR FASHION & COSMETICS WORLDWIDE! FREE 1GB STORAGE & AUTOMATIC GOOGLE RANKING!</span>
+    <button onclick="openModal('sellerModal')" class="bg-white text-slate-950 hover:bg-pink-300 px-2.5 py-0.5 rounded font-black text-[11px] transition">START SELLING &rarr;</button>
   </section>
 
-  <!-- FILTRES PAR CONDITION -->
+  <!-- CONDITION FILTER BAR -->
   <div class="bg-slate-900 border-b border-slate-800/80 py-2.5 px-4 overflow-x-auto">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-4 text-xs">
       <div class="flex items-center gap-2 shrink-0">
-        <span class="text-slate-400 font-medium mr-1">Filtrer par état :</span>
-        <button onclick="filterCondition('all')" id="filterAll" class="px-3 py-1 rounded-full bg-slate-800 text-pink-400 font-semibold border border-pink-500/30">Tout le catalogue</button>
+        <span class="text-slate-400 font-medium mr-1">Condition:</span>
+        <button onclick="filterCondition('all')" id="filterAll" class="px-3 py-1 rounded-full bg-slate-800 text-pink-400 font-semibold border border-pink-500/30">All Items</button>
         <button onclick="filterCondition('second_hand')" id="filterSecondHand" class="px-3 py-1 rounded-full bg-slate-800/60 text-slate-300 hover:bg-slate-800 border border-slate-700 flex items-center gap-1">
-          <span>🏷️ Seconde Main (Occasion)</span>
-          <span class="bg-emerald-950 text-emerald-400 text-[10px] px-1 rounded border border-emerald-800">-50% à -80%</span>
+          <span>🏷️ Pre-Owned (Secondhand)</span>
+          <span class="bg-emerald-950 text-emerald-400 text-[10px] px-1 rounded border border-emerald-800">50%-80% OFF</span>
         </button>
-        <button onclick="filterCondition('new')" id="filterNew" class="px-3 py-1 rounded-full bg-slate-800/60 text-slate-300 hover:bg-slate-800 border border-slate-700">✨ Neuf & Créateurs</button>
+        <button onclick="filterCondition('new')" id="filterNew" class="px-3 py-1 rounded-full bg-slate-800/60 text-slate-300 hover:bg-slate-800 border border-slate-700">✨ Brand New</button>
       </div>
 
       <div class="hidden sm:flex items-center gap-3 text-slate-400 text-[11px] shrink-0">
-        <span class="flex items-center gap-1"><i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Vidéos de preuve d'état</span>
-        <span class="flex items-center gap-1"><i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400"></i> Achat direct sans inscription</span>
+        <span class="flex items-center gap-1"><i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Video Proofs Available</span>
+        <span class="flex items-center gap-1"><i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400"></i> Instant Guest Checkout</span>
       </div>
     </div>
   </div>
 
-  <!-- ZONE DE CONTENU PRINCIPAL -->
+  <!-- MAIN CATALOG CONTENT -->
   <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 relative">
 
     <div id="viewFeed">
       <div id="feedContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        <!-- Généré dynamiquement -->
+        <!-- Rendered dynamically -->
       </div>
     </div>
 
     <div id="viewGrid" class="hidden">
       <div id="gridContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        <!-- Généré dynamiquement -->
+        <!-- Rendered dynamically -->
       </div>
     </div>
 
   </main>
 
-  <!-- TIROIR DE PANIER & GUEST CHECKOUT -->
+  <!-- CART DRAWER & GUEST CHECKOUT WITH SHOPPING CART CARRIAGE HEADER -->
   <div id="cartDrawer" class="fixed inset-y-0 right-0 w-full max-w-md bg-slate-900 border-l border-slate-800 z-50 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
     <div class="p-4 border-b border-slate-800 flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <i data-lucide="shopping-bag" class="w-5 h-5 text-pink-500"></i>
-        <h2 class="font-bold text-lg">Mon Panier Express</h2>
-        <span class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full">Sans compte</span>
+        <i data-lucide="shopping-cart" class="w-5 h-5 text-pink-500"></i>
+        <h2 class="font-bold text-lg">Your Cart Carriage</h2>
+        <span class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full">Guest Checkout</span>
       </div>
       <button onclick="toggleCartDrawer()" class="text-slate-400 hover:text-white p-1">
         <i data-lucide="x" class="w-5 h-5"></i>
@@ -132,133 +136,143 @@
     <div class="p-4 border-t border-slate-800 bg-slate-950/80 space-y-3">
       <div class="space-y-1.5 text-xs">
         <div class="flex justify-between text-slate-400">
-          <span>Sous-total articles</span>
+          <span>Items Subtotal</span>
           <span id="cartSubtotal">$0.00</span>
         </div>
         <div class="flex justify-between text-slate-400">
-          <span>Frais de livraison estimés</span>
+          <span>Estimated Shipping</span>
           <span id="cartShipping">$4.99</span>
         </div>
         <div class="flex justify-between text-emerald-400 text-[11px] pt-1 border-t border-slate-800/60">
-          <span class="flex items-center gap-1"><i data-lucide="check-circle-2" class="w-3 h-3"></i> Commission Garmetics (incluse)</span>
+          <span class="flex items-center gap-1"><i data-lucide="check-circle-2" class="w-3 h-3"></i> Platform Fee (Included)</span>
           <span id="cartCommission" class="font-mono">$0.00</span>
         </div>
         <div class="flex justify-between text-base font-bold text-white pt-2 border-t border-slate-800">
-          <span>Total à payer</span>
+          <span>Total Amount</span>
           <span id="cartTotal" class="text-pink-400">$0.00</span>
         </div>
       </div>
 
       <form id="guestCheckoutForm" onsubmit="processGuestCheckout(event)" class="space-y-2.5 pt-2">
         <div class="text-xs font-semibold text-slate-300 flex items-center gap-1">
-          <i data-lucide="truck" class="w-3.5 h-3.5 text-pink-400"></i> Coordonnées de livraison rapide
+          <i data-lucide="truck" class="w-3.5 h-3.5 text-pink-400"></i> Express Delivery Address
         </div>
-        <input type="text" id="custName" required placeholder="Nom complet" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-xs text-white focus:outline-none focus:border-pink-500">
-        <input type="email" id="custEmail" required placeholder="Adresse E-mail (pour le suivi du colis)" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-xs text-white focus:outline-none focus:border-pink-500">
-        <input type="text" id="custAddress" required placeholder="Adresse postale complète" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-xs text-white focus:outline-none focus:border-pink-500">
+        <input type="text" id="custName" required placeholder="Full Name" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-xs text-white focus:outline-none focus:border-pink-500">
+        <input type="email" id="custEmail" required placeholder="Email Address (for order tracking)" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-xs text-white focus:outline-none focus:border-pink-500">
+        <input type="text" id="custAddress" required placeholder="Complete Shipping Address" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-xs text-white focus:outline-none focus:border-pink-500">
         
         <button type="submit" id="checkoutBtn" class="w-full mt-2 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-2.5 rounded-lg text-sm shadow-lg shadow-pink-500/25 flex items-center justify-center gap-2 transition">
           <i data-lucide="lock" class="w-4 h-4"></i>
-          <span>Payer la commande en 1 clic</span>
+          <span>Complete Order Now</span>
         </button>
       </form>
     </div>
   </div>
 
-  <!-- MODAL CREATION BOUTIQUE / CREATION PRODUIT -->
+  <!-- SELLER MODAL WITH FIXED SCROLLBAR AND ACCESSIBLE SUBMIT BUTTON (FIGURE 8 FIXED) -->
   <div id="sellerModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
-      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 my-auto max-h-[85vh] flex flex-col shadow-2xl">
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3 shrink-0">
         <div>
-          <h3 class="font-bold text-lg text-white">Créer ma boutique & Publier un article</h3>
-          <p class="text-xs text-slate-400">Stockage gratuit : <strong class="text-emerald-400">1 Go offert</strong> par vendeur</p>
+          <h3 class="font-bold text-lg text-white">Create Store & Publish Item</h3>
+          <p class="text-xs text-slate-400">Free Storage: <strong class="text-emerald-400">1 GB Included</strong> per vendor</p>
         </div>
         <button onclick="closeModal('sellerModal')" class="text-slate-400 hover:text-white">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
-      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1.5">
-        <div class="flex justify-between text-xs font-medium">
-          <span class="text-slate-400">Espace de stockage utilisé</span>
-          <span class="text-pink-400">0 Mo / 1024 Mo (0%)</span>
+      <!-- Modal Body - Fully Scrollable -->
+      <div class="overflow-y-auto py-4 space-y-4 pr-1 flex-1">
+        <!-- Vendor Quota Bar -->
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1.5">
+          <div class="flex justify-between text-xs font-medium">
+            <span class="text-slate-400">Used Storage</span>
+            <span class="text-pink-400">0 MB / 1024 MB (0%)</span>
+          </div>
+          <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+            <div class="bg-pink-500 h-full w-[0%]"></div>
+          </div>
         </div>
-        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-          <div class="bg-pink-500 h-full w-[0%]"></div>
-        </div>
+
+        <form id="publishForm" onsubmit="handlePublishProduct(event)" class="space-y-3 text-xs">
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">Store / Brand Name</label>
+            <input type="text" id="prodStoreName" required placeholder="e.g. Paris Vintage Chic" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-pink-500">
+          </div>
+
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">Item Title / Product Name</label>
+            <input type="text" id="prodTitle" required placeholder="e.g. Vintage Leather Jacket Size M" 
+                   oninput="previewSEO()" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-pink-500">
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-slate-300 font-medium mb-1">Category</label>
+              <select id="prodCategory" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-pink-500">
+                <option value="Women's Clothing">Women's Clothing</option>
+                <option value="Men's Clothing">Men's Clothing</option>
+                <option value="Cosmetics & Makeup">Cosmetics & Makeup</option>
+                <option value="Fashion Accessories">Fashion Accessories</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-300 font-medium mb-1">Condition</label>
+              <select id="prodCondition" onchange="toggleOriginalPrice(this.value)" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-pink-500">
+                <option value="second_hand">🏷️ Pre-Owned (Secondhand)</option>
+                <option value="new">✨ Brand New with Tags</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div id="originalPriceBox">
+              <label class="block text-slate-300 font-medium mb-1">Original Price ($)</label>
+              <input type="number" id="prodOriginalPrice" placeholder="e.g. 120" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-pink-500">
+            </div>
+            <div>
+              <label class="block text-slate-300 font-medium mb-1">Selling Price ($)</label>
+              <input type="number" id="prodPrice" required placeholder="e.g. 42" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-pink-500">
+            </div>
+          </div>
+
+          <!-- File Upload Zone -->
+          <div class="border-2 border-dashed border-slate-700 rounded-xl p-4 text-center space-y-2 bg-slate-950/50">
+            <i data-lucide="upload-cloud" class="w-8 h-8 text-pink-400 mx-auto"></i>
+            <p class="text-slate-300 font-medium">Upload Photo (3:4) or Video (9:16)</p>
+            <input type="file" id="prodMedia" accept="image/*,video/*" class="hidden" onchange="handleFileSelect(this)">
+            <button type="button" onclick="document.getElementById('prodMedia').click()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-600">Select File</button>
+            <span id="fileNameDisplay" class="block text-[11px] text-emerald-400 font-mono"></span>
+          </div>
+
+          <!-- SEO Preview Box -->
+          <div class="bg-purple-950/30 border border-purple-800/40 rounded-xl p-3 space-y-1">
+            <div class="flex items-center gap-1.5 text-purple-300 font-semibold text-[11px]">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-pink-400"></i> Automated Google SEO Engine
+            </div>
+            <p class="text-[11px] text-slate-400" id="seoPreviewText">Enter title to generate Google search meta tags...</p>
+          </div>
+        </form>
       </div>
 
-      <form id="publishForm" onsubmit="handlePublishProduct(event)" class="space-y-3 text-xs">
-        <div>
-          <label class="block text-slate-300 font-medium mb-1">Nom de votre boutique</label>
-          <input type="text" id="prodStoreName" required placeholder="ex: Paris Mode Chic" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-pink-500">
-        </div>
-
-        <div>
-          <label class="block text-slate-300 font-medium mb-1">Titre de l'article / Produit</label>
-          <input type="text" id="prodTitle" required placeholder="ex: Veste en cuir vintage Mango Taille M" 
-                 oninput="previewSEO()" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-pink-500">
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-slate-300 font-medium mb-1">Catégorie</label>
-            <select id="prodCategory" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-pink-500">
-              <option value="Vêtements Femme">Vêtements Femme</option>
-              <option value="Vêtements Homme">Vêtements Homme</option>
-              <option value="Cosmétiques & Maquillage">Cosmétiques & Maquillage</option>
-              <option value="Accessoires Mode">Accessoires Mode</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-slate-300 font-medium mb-1">État du produit</label>
-            <select id="prodCondition" onchange="toggleOriginalPrice(this.value)" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-pink-500">
-              <option value="second_hand">🏷️ Seconde Main (Occasion)</option>
-              <option value="new">✨ Neuf avec étiquette</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div id="originalPriceBox">
-            <label class="block text-slate-300 font-medium mb-1">Prix Neuf d'origine ($)</label>
-            <input type="number" id="prodOriginalPrice" placeholder="ex: 120" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-pink-500">
-          </div>
-          <div>
-            <label class="block text-slate-300 font-medium mb-1">Votre Prix de Vente ($)</label>
-            <input type="number" id="prodPrice" required placeholder="ex: 42" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-pink-500">
-          </div>
-        </div>
-
-        <div class="border-2 border-dashed border-slate-700 rounded-xl p-4 text-center space-y-2 bg-slate-950/50">
-          <i data-lucide="upload-cloud" class="w-8 h-8 text-pink-400 mx-auto"></i>
-          <p class="text-slate-300 font-medium">Photo (Ratio 3:4) ou Vidéo (Ratio 9:16)</p>
-          <input type="file" id="prodMedia" accept="image/*,video/*" class="hidden" onchange="handleFileSelect(this)">
-          <button type="button" onclick="document.getElementById('prodMedia').click()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-600">Sélectionner un fichier</button>
-          <span id="fileNameDisplay" class="block text-[11px] text-emerald-400 font-mono"></span>
-        </div>
-
-        <div class="bg-purple-950/30 border border-purple-800/40 rounded-xl p-3 space-y-1">
-          <div class="flex items-center gap-1.5 text-purple-300 font-semibold text-[11px]">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-pink-400"></i> Moteur SEO Google Automatique
-          </div>
-          <p class="text-[11px] text-slate-400" id="seoPreviewText">Remplissez le titre pour générer les balises Google...</p>
-        </div>
-
-        <button type="submit" id="submitProdBtn" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 font-bold py-2.5 rounded-lg shadow-lg">
-          Mettre en ligne et Booster ma visibilité
+      <!-- Modal Footer - Fixed at Bottom so Submit Button is Always Visible -->
+      <div class="pt-3 border-t border-slate-800 shrink-0">
+        <button type="button" onclick="document.getElementById('publishForm').requestSubmit()" id="submitProdBtn" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 font-bold py-3 rounded-xl shadow-lg hover:from-emerald-400 hover:to-teal-500 transition text-sm">
+          PUBLISH ITEM & BOOST GOOGLE SEO
         </button>
-      </form>
+      </div>
     </div>
   </div>
 
-  <!-- MODAL TABLEAU DE BORD ADMIN -->
+  <!-- FOUNDER DASHBOARD MODAL -->
   <div id="adminModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full p-6 space-y-5">
       <div class="flex justify-between items-center border-b border-slate-800 pb-3">
         <div class="flex items-center gap-2">
           <div class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></div>
-          <h3 class="font-bold text-lg text-white">Tableau de Bord Fondateur - Garmetics</h3>
+          <h3 class="font-bold text-lg text-white">Founder Dashboard - Garmetics Global</h3>
         </div>
         <button onclick="closeModal('adminModal')" class="text-slate-400 hover:text-white">
           <i data-lucide="x" class="w-5 h-5"></i>
@@ -267,48 +281,46 @@
 
       <div class="grid grid-cols-3 gap-3">
         <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
-          <span class="text-slate-400 text-[11px] block">Commissions Accumulées</span>
+          <span class="text-slate-400 text-[11px] block">Accrued Commissions</span>
           <span class="text-xl font-black text-emerald-400" id="totalCommissionsDisplay">$0.00</span>
-          <span class="text-[10px] text-emerald-500/80 block mt-0.5">Taux moyen : 12.5%</span>
+          <span class="text-[10px] text-emerald-500/80 block mt-0.5">Avg Rate: 12.5%</span>
         </div>
         <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
-          <span class="text-slate-400 text-[11px] block">Volume Brut de Ventes</span>
+          <span class="text-slate-400 text-[11px] block">Gross Sales Volume</span>
           <span class="text-xl font-black text-white" id="totalVolumeDisplay">$0.00</span>
-          <span class="text-[10px] text-slate-500 block mt-0.5" id="totalOrdersCount">0 transaction</span>
+          <span class="text-[10px] text-slate-500 block mt-0.5" id="totalOrdersCount">0 transactions</span>
         </div>
         <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
-          <span class="text-slate-400 text-[11px] block">Revenus Pubs AdSense</span>
+          <span class="text-slate-400 text-[11px] block">AdSense Ads Revenue</span>
           <span class="text-xl font-black text-purple-400">$340.20</span>
-          <span class="text-[10px] text-purple-300/80 block mt-0.5">Visites SEO Google</span>
+          <span class="text-[10px] text-purple-300/80 block mt-0.5">Google Organic Traffic</span>
         </div>
       </div>
 
       <div class="space-y-2">
-        <h4 class="text-xs font-semibold text-slate-300">Dernières commandes enregistrées (Supabase Live)</h4>
+        <h4 class="text-xs font-semibold text-slate-300">Latest Live Orders (Supabase Database)</h4>
         <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 space-y-2 text-xs max-h-48 overflow-y-auto" id="ordersListContainer">
-          <p class="text-slate-500 text-center py-4">Chargement des commandes...</p>
+          <p class="text-slate-500 text-center py-4">Loading order records...</p>
         </div>
       </div>
 
       <div class="text-right">
-        <button onclick="closeModal('adminModal')" class="bg-slate-800 text-slate-200 px-4 py-2 rounded-lg text-xs font-medium">Fermer</button>
+        <button onclick="closeModal('adminModal')" class="bg-slate-800 text-slate-200 px-4 py-2 rounded-lg text-xs font-medium">Close</button>
       </div>
     </div>
   </div>
 
-  <!-- JAVASCRIPT CONNECTÉ À SUPABASE -->
+  <!-- JAVASCRIPT LOGIC -->
   <script>
-    // INITIALISATION SUPABASE AVEC VOS CLÉS
     const SUPABASE_URL = 'https://ewrpsvkehekjkvscwmlq.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_y4fDyqaGkfc-4DzVi9H0kg_Lw85ZPIj';
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // DONNÉES PAR DÉFAUT SI BASE VIDE
     const fallbackProducts = [
       {
         id: '1',
-        title: 'Veste en Cuir Vintage Style Bikers',
-        category: 'Vêtements Homme',
+        title: 'Vintage Leather Biker Jacket',
+        category: "Men's Clothing",
         condition: 'second_hand',
         price_original: 120,
         price_sale: 42,
@@ -316,12 +328,12 @@
         store_name: 'RetroMode Paris',
         image_url: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop&q=80',
         video_url: 'https://assets.mixkit.co/videos/preview/mixkit-fashion-model-in-a-leather-jacket-41544-large.mp4',
-        seo_keywords: ['veste cuir homme', 'cuir vintage occasion', 'garmetics']
+        seo_keywords: ['leather jacket', 'vintage coat', 'garmetics']
       },
       {
         id: '2',
-        title: 'Sérum Visage Acide Hyaluronique Éclat',
-        category: 'Cosmétiques & Maquillage',
+        title: 'Hyaluronic Acid Face Glow Serum',
+        category: 'Cosmetics & Makeup',
         condition: 'new',
         price_original: null,
         price_sale: 24,
@@ -329,7 +341,7 @@
         store_name: 'GlowCosmetics Bio',
         image_url: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&auto=format&fit=crop&q=80',
         video_url: null,
-        seo_keywords: ['serum visage neuf', 'soin peau bio', 'garmetics']
+        seo_keywords: ['glow serum', 'skincare', 'garmetics']
       }
     ];
 
@@ -343,7 +355,6 @@
       await fetchOrders();
     });
 
-    // CHARGER PRODUITS DEPUIS SUPABASE
     async function fetchProducts() {
       try {
         const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
@@ -383,7 +394,7 @@
       const filtered = getFilteredProducts();
 
       if (filtered.length === 0) {
-        container.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 text-sm">Aucun article disponible.</div>`;
+        container.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 text-sm">No items found matching your criteria.</div>`;
         return;
       }
 
@@ -393,15 +404,15 @@
           <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-xl hover:border-slate-700 transition flex flex-col justify-between relative group">
             <div class="p-3 bg-gradient-to-b from-slate-950/90 to-transparent absolute top-0 inset-x-0 z-10 flex justify-between items-center">
               <span class="text-xs font-bold text-white bg-slate-900/70 backdrop-blur-md px-2.5 py-1 rounded-full border border-slate-700/50">
-                ${prod.store_name || 'Boutique Partner'}
+                ${prod.store_name || 'Global Partner'}
               </span>
               ${isSecondHand ? `
                 <span class="bg-emerald-500 text-slate-950 font-black text-[10px] px-2 py-0.5 rounded-full shadow-lg">
-                  -${prod.discount || 50}% vs Neuf
+                  -${prod.discount || 50}% OFF
                 </span>
               ` : `
                 <span class="bg-purple-500 text-white font-bold text-[10px] px-2 py-0.5 rounded-full">
-                  ✨ NEUF
+                  ✨ BRAND NEW
                 </span>
               `}
             </div>
@@ -410,7 +421,7 @@
               ${prod.video_url ? `
                 <video src="${prod.video_url}" autoplay loop muted playsinline class="w-full h-full object-cover group-hover:scale-105 transition duration-500"></video>
                 <span class="absolute bottom-3 left-3 bg-slate-950/80 text-xs px-2 py-1 rounded text-slate-300 flex items-center gap-1 backdrop-blur-md">
-                  <i data-lucide="video" class="w-3.5 h-3.5 text-pink-400"></i> Preuve Vidéo
+                  <i data-lucide="video" class="w-3.5 h-3.5 text-pink-400"></i> Video Proof
                 </span>
               ` : `
                 <img src="${prod.image_url || 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800'}" alt="${prod.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
@@ -420,20 +431,25 @@
             <div class="p-4 space-y-3 bg-slate-900 flex-1 flex flex-col justify-between">
               <div>
                 <h3 class="font-bold text-sm text-white line-clamp-1">${prod.title}</h3>
-                <p class="text-[11px] text-slate-400">Catégorie : ${prod.category}</p>
+                <p class="text-[11px] text-slate-400">${prod.category}</p>
               </div>
 
-              <div class="flex items-center justify-between pt-2 border-t border-slate-800/60">
+              <!-- PRICE & CART CARRIAGE ACTION BUTTON RIGHT NEXT TO PRICE -->
+              <div class="flex items-center justify-between pt-2 border-t border-slate-800/60 gap-2">
                 <div>
                   <span class="text-xl font-black text-pink-400">$${parseFloat(prod.price_sale).toFixed(2)}</span>
                   ${isSecondHand && prod.price_original ? `
-                    <span class="text-xs text-slate-500 line-through ml-1.5">$${parseFloat(prod.price_original).toFixed(2)}</span>
+                    <span class="text-xs text-slate-500 line-through ml-1">$${parseFloat(prod.price_original).toFixed(2)}</span>
                   ` : ''}
                 </div>
-                <button onclick="addToCart('${prod.id}')" class="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 shadow-lg shadow-pink-500/20 transition">
-                  <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
-                  Acheter
-                </button>
+                <div class="flex items-center gap-1">
+                  <button onclick="addToCart('${prod.id}')" class="bg-slate-800 hover:bg-slate-700 text-pink-400 p-2 rounded-xl border border-slate-700 transition" title="Add to Cart Carriage">
+                    <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+                  </button>
+                  <button onclick="addToCart('${prod.id}')" class="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold px-3 py-1.5 rounded-xl text-xs shadow-lg shadow-pink-500/20 transition">
+                    Buy
+                  </button>
+                </div>
               </div>
 
               <div class="pt-1 flex flex-wrap gap-1">
@@ -457,15 +473,15 @@
             <div class="relative aspect-[3/4] bg-slate-950">
               <img src="${prod.image_url || 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800'}" alt="${prod.title}" class="w-full h-full object-cover">
               <span class="absolute top-2 left-2 text-[9px] font-bold px-2 py-0.5 rounded-full ${isSecondHand ? 'bg-emerald-500 text-slate-950' : 'bg-purple-500 text-white'}">
-                ${isSecondHand ? 'OCCASION' : 'NEUF'}
+                ${isSecondHand ? 'USED' : 'NEW'}
               </span>
             </div>
             <div class="p-3 space-y-2">
               <h4 class="font-bold text-xs text-white line-clamp-1">${prod.title}</h4>
-              <div class="flex items-baseline justify-between">
+              <div class="flex items-center justify-between">
                 <span class="font-black text-sm text-pink-400">$${parseFloat(prod.price_sale).toFixed(2)}</span>
-                <button onclick="addToCart('${prod.id}')" class="p-1.5 bg-slate-800 text-pink-400 hover:bg-pink-500 hover:text-white rounded-lg transition">
-                  <i data-lucide="plus" class="w-4 h-4"></i>
+                <button onclick="addToCart('${prod.id}')" class="p-1.5 bg-slate-800 text-pink-400 hover:bg-pink-500 hover:text-white rounded-lg transition" title="Add to Cart Carriage">
+                  <i data-lucide="shopping-cart" class="w-4 h-4"></i>
                 </button>
               </div>
             </div>
@@ -517,14 +533,14 @@
 
       const container = document.getElementById('cartItemsContainer');
       if (cart.length === 0) {
-        container.innerHTML = `<div class="text-center py-8 text-slate-500 text-xs">Votre panier express est vide.</div>`;
+        container.innerHTML = `<div class="text-center py-8 text-slate-500 text-xs">Your shopping cart carriage is empty.</div>`;
       } else {
         container.innerHTML = cart.map((item, idx) => `
           <div class="flex items-center gap-3 bg-slate-950 p-2.5 rounded-xl border border-slate-800">
             <img src="${item.image_url || 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800'}" class="w-12 h-16 object-cover rounded-lg">
             <div class="flex-1 min-w-0">
               <h5 class="text-xs font-bold text-white truncate">${item.title}</h5>
-              <span class="text-[10px] text-slate-400 block">${item.condition === 'second_hand' ? '🏷️ Occasion' : '✨ Neuf'}</span>
+              <span class="text-[10px] text-slate-400 block">${item.condition === 'second_hand' ? '🏷️ Pre-Owned' : '✨ Brand New'}</span>
               <span class="text-xs font-bold text-pink-400">$${parseFloat(item.price_sale).toFixed(2)}</span>
             </div>
             <button onclick="removeFromCart(${idx})" class="text-slate-500 hover:text-red-400 p-1">
@@ -548,7 +564,7 @@
       const total = subtotal + shipping;
 
       document.getElementById('cartSubtotal').innerText = `$${subtotal.toFixed(2)}`;
-      document.getElementById('cartShipping').innerText = shipping === 0 ? 'GRATUIT' : `$${shipping.toFixed(2)}`;
+      document.getElementById('cartShipping').innerText = shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`;
       document.getElementById('cartCommission').innerText = `$${commissionTotal.toFixed(2)}`;
       document.getElementById('cartTotal').innerText = `$${total.toFixed(2)}`;
 
@@ -563,13 +579,12 @@
     function toggleCartDrawer() { document.getElementById('cartDrawer').classList.toggle('translate-x-full'); }
     function openCartDrawer() { document.getElementById('cartDrawer').classList.remove('translate-x-full'); }
 
-    // ENREGISTRER COMMANDE SUPABASE
     async function processGuestCheckout(e) {
       e.preventDefault();
-      if (cart.length === 0) return alert('Votre panier est vide.');
+      if (cart.length === 0) return alert('Your cart is empty.');
 
       const btn = document.getElementById('checkoutBtn');
-      btn.innerText = "Validation en cours...";
+      btn.innerText = "Processing Order...";
       btn.disabled = true;
 
       let subtotal = 0;
@@ -594,20 +609,19 @@
         const { error } = await supabase.from('orders').insert([orderData]);
         if (error) throw error;
 
-        alert('✅ Commande validée et enregistrée dans Supabase ! Le vendeur va préparer votre colis.');
+        alert('✅ Order successfully placed and saved to Supabase! The vendor has been notified for shipping.');
         cart = [];
         updateCartUI();
         toggleCartDrawer();
         await fetchOrders();
       } catch (err) {
-        alert('Commande validée en mode local (Table Supabase orders en attente).');
+        alert('Order processed in demo mode.');
       } finally {
-        btn.innerText = "Payer la commande en 1 clic";
+        btn.innerText = "Complete Order Now";
         btn.disabled = false;
       }
     }
 
-    // CHARGER LES COMMANDES DANS L'ADMIN
     async function fetchOrders() {
       try {
         const { data } = await supabase.from('orders').select('*').order('created_at', { ascending: false });
@@ -628,7 +642,7 @@
                 </div>
                 <div class="text-right">
                   <span class="text-emerald-400 font-bold">$${parseFloat(o.total_amount).toFixed(2)}</span>
-                  <span class="block text-[10px] text-purple-400">Comm : $${parseFloat(o.platform_commission).toFixed(2)}</span>
+                  <span class="block text-[10px] text-purple-400">Fee: $${parseFloat(o.platform_commission).toFixed(2)}</span>
                 </div>
               </div>
             `;
@@ -638,10 +652,10 @@
           document.getElementById('totalVolumeDisplay').innerText = `$${volSum.toFixed(2)}`;
           document.getElementById('totalOrdersCount').innerText = `${data.length} transactions`;
         } else {
-          container.innerHTML = `<p class="text-slate-500 text-center py-4">Aucune commande enregistrée pour le moment.</p>`;
+          container.innerHTML = `<p class="text-slate-500 text-center py-4">No order records found.</p>`;
         }
       } catch (err) {
-        console.log("Erreur chargement orders", err);
+        console.log("Error loading orders", err);
       }
     }
 
@@ -658,26 +672,25 @@
       const preview = document.getElementById('seoPreviewText');
 
       if (!title) {
-        preview.innerText = "Remplissez le titre pour générer les balises Google...";
+        preview.innerText = "Enter title to generate Google search meta tags...";
         return;
       }
 
-      const kw = [title.toLowerCase(), cond === 'second_hand' ? 'seconde main' : 'neuf', 'garmetics'];
-      preview.innerHTML = `<strong>Titre Google :</strong> ${title} ${cond === 'second_hand' ? 'Occasion' : 'Neuf'} | Garmetics<br><strong>Mots-Clés :</strong> ${kw.join(', ')}`;
+      const kw = [title.toLowerCase(), cond === 'second_hand' ? 'pre-owned' : 'brand new', 'garmetics'];
+      preview.innerHTML = `<strong>Google Title:</strong> ${title} ${cond === 'second_hand' ? 'Pre-Owned' : 'New'} | Garmetics<br><strong>Keywords:</strong> ${kw.join(', ')}`;
     }
 
     function handleFileSelect(input) {
       if (input.files && input.files[0]) {
-        document.getElementById('fileNameDisplay').innerText = `Fichier sélectionné : ${input.files[0].name}`;
+        document.getElementById('fileNameDisplay').innerText = `Selected: ${input.files[0].name}`;
       }
     }
 
-    // PUBLIER UN PRODUIT SUR SUPABASE (TABLE + STORAGE)
     async function handlePublishProduct(e) {
       e.preventDefault();
 
       const btn = document.getElementById('submitProdBtn');
-      btn.innerText = "Mise en ligne...";
+      btn.innerText = "Publishing Item...";
       btn.disabled = true;
 
       const title = document.getElementById('prodTitle').value;
@@ -691,7 +704,6 @@
       let imageUrl = 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800';
       let videoUrl = null;
 
-      // UPLOAD VERS STORAGE SUPABASE
       if (mediaFile) {
         try {
           const filePath = `${Date.now()}_${mediaFile.name}`;
@@ -706,7 +718,7 @@
             }
           }
         } catch (err) {
-          console.log("Erreur storage", err);
+          console.log("Storage upload error", err);
         }
       }
 
@@ -720,20 +732,20 @@
         store_name: storeName,
         image_url: imageUrl,
         video_url: videoUrl,
-        seo_keywords: [title.toLowerCase(), category.toLowerCase(), condition === 'second_hand' ? 'occasion' : 'neuf', 'garmetics']
+        seo_keywords: [title.toLowerCase(), category.toLowerCase(), condition === 'second_hand' ? 'pre-owned' : 'new', 'garmetics']
       };
 
       try {
         const { error } = await supabase.from('products').insert([newProductData]);
         if (error) throw error;
 
-        alert('🎉 Article enregistré sur Supabase avec succès !');
+        alert('🎉 Product published and saved to Supabase successfully!');
         closeModal('sellerModal');
         await fetchProducts();
       } catch (err) {
-        alert('Erreur enregistrement produit. Vérifiez que la table SQL est créée.');
+        alert('Error publishing item. Please verify Supabase SQL setup.');
       } finally {
-        btn.innerText = "Mettre en ligne et Booster ma visibilité";
+        btn.innerText = "PUBLISH ITEM & BOOST GOOGLE SEO";
         btn.disabled = false;
       }
     }
